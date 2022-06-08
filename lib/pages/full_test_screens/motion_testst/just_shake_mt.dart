@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:diagnose/pages/full_test_screens/hardware_testft/hardware_test_ht.dart';
 import 'package:diagnose/pages/quick_test_screens/speaker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 import 'dart:math' as math;
+
+import 'package:all_sensors/all_sensors.dart';
+// import 'package:shake/shake.dart';
 
 class JustShakeMT extends StatefulWidget {
   const JustShakeMT({Key? key}) : super(key: key);
@@ -13,8 +18,82 @@ class JustShakeMT extends StatefulWidget {
 }
 
 class _JustShakeMTState extends State<JustShakeMT> {
+
+    List<double> _accelerometerValues = <double>[];
+  List<double> _userAccelerometerValues = <double>[];
+  List<double> _gyroscopeValues = <double>[];
+  bool _proximityValues = false;
+  List<StreamSubscription<dynamic>> _streamSubscriptions =
+      <StreamSubscription<dynamic>>[];
+
+
+      @override
+  void dispose() {
+    super.dispose();
+    for (StreamSubscription<dynamic> subscription in _streamSubscriptions) {
+      subscription.cancel();
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    // ShakeDetector detector = ShakeDetector.autoStart(
+    //   onPhoneShake: () {
+    //     ScaffoldMessenger.of(context)
+    //         .showSnackBar(SnackBar(content: Text('Shake!')));
+    //     // Do stuff on phone shake
+    //   },
+    //   minimumShakeCount: 1,
+    //   shakeSlopTimeMS: 500,
+    //   shakeCountResetTime: 3000,
+    //   shakeThresholdGravity: 2.7,
+    // );
+
+    // To close: detector.stopListening();
+    // ShakeDetector.waitForStart() waits for user to call detector.startListening();
+  
+
+
+    _streamSubscriptions
+        .add(accelerometerEvents!.listen((AccelerometerEvent event) {
+      setState(() {
+        _accelerometerValues = <double>[event.x, event.y, event.z];
+      });
+    }));
+    _streamSubscriptions.add(gyroscopeEvents!.listen((GyroscopeEvent event) {
+      setState(() {
+        _gyroscopeValues = <double>[event.x, event.y, event.z];
+      });
+    }));
+
+    _streamSubscriptions
+        .add(userAccelerometerEvents!.listen((UserAccelerometerEvent event) {
+      setState(() {
+        _userAccelerometerValues = <double>[event.x, event.y, event.z];
+      });
+    }));
+    _streamSubscriptions.add(proximityEvents!.listen((ProximityEvent event) {
+      setState(() {
+        _proximityValues = event.getValue();
+      });
+    }));
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
+         final List<String> accelerometer =
+        _accelerometerValues.map((double v) => v.toStringAsFixed(1)).toList();
+    final List<String> gyroscope =
+        _gyroscopeValues.map((double v) => v.toStringAsFixed(1)).toList();
+    final List<String> userAccelerometer = _userAccelerometerValues
+        .map((double v) => v.toStringAsFixed(1))
+        .toList();
+
+        
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     // Figma Flutter Generator Diagose1Widget - FRAME
@@ -203,16 +282,16 @@ class _JustShakeMTState extends State<JustShakeMT> {
                   child: placementContainer("Accelerometer", 0.3),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: lettercounting("x", "312.93823"),
+                  padding:  EdgeInsets.all(8.0),
+                  child: lettercounting("x", "${accelerometer[0].toString()}"),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: lettercounting("y", "312.93823"),
+                  padding:  EdgeInsets.all(8.0),
+                  child: lettercounting("y", "${accelerometer[1].toString()}"),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: lettercounting("z", "312.93823"),
+                  padding: EdgeInsets.all(8.0),
+                  child: lettercounting("z", "${accelerometer[2].toString()}"),
                 ),
               ],
             ),

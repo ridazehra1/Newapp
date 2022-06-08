@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 
+
 class MotionTestST extends StatefulWidget {
   const MotionTestST({Key? key}) : super(key: key);
 
@@ -17,8 +18,19 @@ class MotionTestST extends StatefulWidget {
 }
 
 class _MotionTestSTState extends State<MotionTestST> {
+
+ 
+
+
   @override
   Widget build(BuildContext context) {
+
+ 
+
+
+  
+
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     // Figma Flutter Generator Diagose1Widget - FRAME

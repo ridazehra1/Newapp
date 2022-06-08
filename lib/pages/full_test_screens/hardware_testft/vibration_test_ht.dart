@@ -4,6 +4,9 @@ import 'package:diagnose/pages/full_test_screens/screen_testft/BoxesFt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:vibration/vibration.dart';
+
+
 
 class VibrationTestHT extends StatefulWidget {
   const VibrationTestHT({Key? key}) : super(key: key);
@@ -13,6 +16,16 @@ class VibrationTestHT extends StatefulWidget {
 }
 
 class _VibrationTestHTState extends State<VibrationTestHT> {
+  @override
+  void initState() {
+    super.initState();
+   vib();
+  
+  }
+
+   void vib  (){
+        Vibration.vibrate(duration: 5000);
+  }  
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;

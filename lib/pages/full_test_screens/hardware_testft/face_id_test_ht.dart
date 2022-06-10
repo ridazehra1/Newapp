@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
 import 'package:diagnose/pages/full_test_screens/hardware_testft/charging_test_ht.dart';
 import 'package:diagnose/pages/full_test_screens/hardware_testft/light_sensor_ht.dart';
 import 'package:flutter/material.dart';
@@ -5,18 +8,61 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
 
 class FaceIdTestHT extends StatefulWidget {
-  const FaceIdTestHT({Key? key}) : super(key: key);
-
+  final List<CameraDescription>? cameras;
+  const FaceIdTestHT({this.cameras, Key? key}) : super(key: key);
   @override
   State<FaceIdTestHT> createState() => _FaceIdTestHTState();
 }
 
 class _FaceIdTestHTState extends State<FaceIdTestHT> {
+  late CameraController controller;
+  late XFile pictureFile;
+  var show = false;
+
+  var pic = false;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = CameraController(
+      widget.cameras![1],
+      ResolutionPreset.max,
+    );
+
+    Future.delayed(Duration(seconds: 2), () async {
+      pictureFile = await controller.takePicture();
+
+      setState(() {
+        show = !show;
+        pictureFile = pictureFile;
+      });
+    });
+    controller.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     // Figma Flutter Generator Diagose1Widget - FRAME
+    if (!controller.value.isInitialized) {
+      return const SizedBox(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
 
     return Scaffold(
       body: Container(
@@ -69,17 +115,61 @@ class _FaceIdTestHTState extends State<FaceIdTestHT> {
             SizedBox(
               height: height * 0.05,
             ),
-            Container(
-              width: width * 0.7,
-              height: height * 0.3,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(
-                      'assets/Gif/box.gif',
+            // Container(
+            //   width: width * 0.7,
+            //   height: height * 0.3,
+            //   decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //         image: AssetImage(
+            //           'assets/Gif/box.gif',
+            //         ),
+            //         fit: BoxFit.fill),
+            //   ),
+            // ),
+            show == true
+                ? Container(
+                    child: Column(
+                    children: [
+                      Text(
+                        'Face ID Working',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                            fontFamily: 'Roboto',
+                            fontSize: 22,
+                            decoration: TextDecoration.none,
+                            letterSpacing:
+                                0 /*percentages not used in flutter. defaulting to zero*/,
+                            fontWeight: FontWeight.normal,
+                            height: 1),
+                      ),
+                      //  Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Center(
+                      //     child: SizedBox(
+                      //     height: height * 0.3,
+                      //       width: width * 0.7,
+                      //       child: CameraPreview(controller),
+                      //     ),
+                      //   ),
+                      // ),
+                      Image.file(
+                        File(pictureFile.path.toString()),
+                        height: height * 0.3,
+                        width: width * 0.7,
+                      )
+                    ],
+                  ))
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: SizedBox(
+                        height: height * 0.3,
+                        width: width * 0.7,
+                        child: CameraPreview(controller),
+                      ),
                     ),
-                    fit: BoxFit.fill),
-              ),
-            ),
+                  ),
             SizedBox(
               height: height * 0.03,
             ),
@@ -115,6 +205,7 @@ class _FaceIdTestHTState extends State<FaceIdTestHT> {
             SizedBox(
               height: height * 0.18,
             ),
+
             Padding(
               padding:
                   const EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 0),
@@ -140,7 +231,7 @@ class _FaceIdTestHTState extends State<FaceIdTestHT> {
                     );
                   },
                   child: const Text(
-                    "Capture",
+                    "Ok",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       letterSpacing: 2,

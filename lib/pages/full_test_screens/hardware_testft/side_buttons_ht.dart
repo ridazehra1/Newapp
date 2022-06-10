@@ -3,6 +3,8 @@ import 'package:diagnose/pages/full_test_screens/screen_testft/BoxesFt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:perfect_volume_control/perfect_volume_control.dart';
+import 'package:vibration/vibration.dart';
 
 class SideButtonsHT extends StatefulWidget {
   const SideButtonsHT({Key? key}) : super(key: key);
@@ -12,11 +14,34 @@ class SideButtonsHT extends StatefulWidget {
 }
 
 class _SideButtonsHTState extends State<SideButtonsHT> {
+   double currentvol = 0.5;
+
+   
+
+    void initState() {
+      Future.delayed(Duration.zero, () async {
+        currentvol = await PerfectVolumeControl.getVolume();
+      });
+
+      PerfectVolumeControl.stream.listen((volume) {
+        vib();
+      });
+
+      super.initState();
+    }
+
+     void vib() {
+      print("ok");
+      Vibration.vibrate(duration: 500);
+    }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     // Figma Flutter Generator Diagose1Widget - FRAME
+
+   
 
     return Scaffold(
       body: Container(
@@ -100,7 +125,7 @@ class _SideButtonsHTState extends State<SideButtonsHT> {
               height: height * 0.01,
             ),
             Text(
-              'Check your mobile buttons',
+              'Check your mobile buttons1',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Color.fromRGBO(255, 255, 255, 1),

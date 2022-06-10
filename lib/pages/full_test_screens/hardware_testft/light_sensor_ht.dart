@@ -3,6 +3,8 @@ import 'package:diagnose/pages/full_test_screens/hardware_testft/stress_test_ht.
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:page_transition/page_transition.dart';
+import 'dart:async';
+import 'package:light/light.dart';
 
 class LightSensorTestHT extends StatefulWidget {
   const LightSensorTestHT({Key? key}) : super(key: key);
@@ -12,6 +14,41 @@ class LightSensorTestHT extends StatefulWidget {
 }
 
 class _LightSensorTestHTState extends State<LightSensorTestHT> {
+
+
+    String _luxString = 'Unknown';
+  late Light _light;
+  late StreamSubscription _subscription;
+
+
+  void onData(int luxValue) async {
+    print("Lux value: $luxValue");
+    setState(() {
+      _luxString = "$luxValue";
+    });
+  }
+
+  void stopListening() {
+    _subscription.cancel();
+  }
+
+  void startListening() {
+    _light = new Light();
+    try {
+      _subscription = _light.lightSensorStream.listen(onData);
+    } on LightException catch (exception) {
+      print(exception);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // initPlatformState();
+    startListening();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -99,8 +136,20 @@ class _LightSensorTestHTState extends State<LightSensorTestHT> {
             SizedBox(
               height: height * 0.01,
             ),
-            Text(
-              'Put hand on your phone top',
+          _luxString == "unknow" ?   Text(
+              'Put hand on your phone top$_luxString',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  color: Color.fromRGBO(255, 255, 255, 1),
+                  fontFamily: 'Advent Pro',
+                  fontSize: 16,
+                  decoration: TextDecoration.none,
+                  letterSpacing:
+                      0 /*percentages not used in flutter. defaulting to zero*/,
+                  fontWeight: FontWeight.normal,
+                  height: 1),
+            ): Text(
+              'Light Sensor Dected',
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Color.fromRGBO(255, 255, 255, 1),

@@ -82,54 +82,30 @@ class _MobilepercentFTState extends State<MobilepercentFT> {
                     margin: EdgeInsets.only(top: 35, left: 20),
                     child: Row(
                       children: [
-                        GestureDetector(
-                          onTap: (){
-                            print("call");
+                       
+                         Container(
+                          height: height * 0.25,
+                          width: width * 0.25,
+                          padding: EdgeInsets.only(top: 10, left: 10),
+                          //  margin: EdgeInsets.all(40),
+                          child:   Center(child: Text("25%"))
+                        ),
+                        // \:
+                        // Container(
+                        //   height: height * 0.25,
+                        //   width: width * 0.25,
+                        //   padding: EdgeInsets.only(top: 10, left: 10),
+                        //   //  margin: EdgeInsets.all(40),
+                        //   child:   Center(child: Text("0%"))
+                        // ),
+                     Container(
+                          height: height * 0.25,
+                          width: width * 0.25,
+                          padding: EdgeInsets.only(top: 10, left: 10),
+                          //  margin: EdgeInsets.all(40),
+                          child:   Center(child: Text("25%"))
+                        )
                         
-                            setState(() {
-                              box1=false;
-                              print(box1);
-                            });
-
-
-                          },
-                          child: 
-                          box1 ?  Container(
-                            height: height * 0.25,
-                            width: width * 0.25,
-                            padding: EdgeInsets.only(top: 10, left: 10),
-                            //  margin: EdgeInsets.all(40),
-                            child:   Center(child: Text("25%"))
-                          ):
-                          Container(
-                            height: height * 0.25,
-                            width: width * 0.25,
-                            padding: EdgeInsets.only(top: 10, left: 10),
-                            //  margin: EdgeInsets.all(40),
-                            child:   Center(child: Text("0%"))
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                                setState(() {
-                              box2=false;
-                            });
-                          },
-                          child:  box2 ?  Container(
-                            height: height * 0.25,
-                            width: width * 0.25,
-                            padding: EdgeInsets.only(top: 10, left: 10),
-                            //  margin: EdgeInsets.all(40),
-                            child:   Center(child: Text("25%"))
-                          ):
-                          Container(
-                            height: height * 0.25,
-                            width: width * 0.25,
-                            padding: EdgeInsets.only(top: 10, left: 10),
-                            //  margin: EdgeInsets.all(40),
-                            child:   Center(child: Text("0%"))
-                          ),
-                        ),
                       ],
                     ),
                   ),
@@ -137,49 +113,29 @@ class _MobilepercentFTState extends State<MobilepercentFT> {
                     margin: EdgeInsets.only(top: 15, left: 20),
                     child: Row(
                       children: [
-                        GestureDetector(
-                          onTap: (){
-                                setState(() {
-                              box3=false;
-                            });
-
-                          },
-                          child:  box3 ?  Container(
-                            height: height * 0.25,
-                            width: width * 0.25,
-                            padding: EdgeInsets.only(top: 10, left: 10),
-                            //  margin: EdgeInsets.all(40),
-                            child:   Center(child: Text("25%"))
-                          ):
-                          Container(
-                            height: height * 0.25,
-                            width: width * 0.25,
-                            padding: EdgeInsets.only(top: 10, left: 10),
-                            //  margin: EdgeInsets.all(40),
-                            child:   Center(child: Text("0%"))
-                          ),
+                     Container(
+                          height: height * 0.25,
+                          width: width * 0.25,
+                          padding: EdgeInsets.only(top: 10, left: 10),
+                          //  margin: EdgeInsets.all(40),
+                          child:   Center(child: Text("25%"))
                         ),
-                        GestureDetector(
-                          onTap: (){
-                                setState(() {
-                              box4=false;
-                            });
-                          },
-                          child:  box4 ?  Container(
-                            height: height * 0.25,
-                            width: width * 0.25,
-                            padding: EdgeInsets.only(top: 10, left: 10),
-                            //  margin: EdgeInsets.all(40),
-                            child:   Center(child: Text("25%"))
-                          ):
+                      
                           Container(
-                            height: height * 0.25,
-                            width: width * 0.25,
-                            padding: EdgeInsets.only(top: 10, left: 10),
-                            //  margin: EdgeInsets.all(40),
-                            child:   Center(child: Text("0%"))
-                          ),
-                        ),
+                          height: height * 0.25,
+                          width: width * 0.25,
+                          padding: EdgeInsets.only(top: 10, left: 10),
+                          //  margin: EdgeInsets.all(40),
+                          child:   Center(child: Text("25%"))
+                        )
+                        // :
+                        // Container(
+                        //   height: height * 0.25,
+                        //   width: width * 0.25,
+                        //   padding: EdgeInsets.only(top: 10, left: 10),
+                        //   //  margin: EdgeInsets.all(40),
+                        //   child:   Center(child: Text("0%"))
+                        // ),
                       ],
                     ),
                   ),

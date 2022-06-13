@@ -1,4 +1,5 @@
 
+import 'package:diagnose/pages/full_test_screens/screen_testft/MobileFullScreen.dart';
 import 'package:diagnose/pages/full_test_screens/screen_testft/mobileft.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -149,7 +150,7 @@ class _ScreenAnalysisFTState extends State<ScreenAnalysisFT> {
                           type: PageTransitionType.fade,
                           reverseDuration: const Duration(seconds: 1),
                           duration: const Duration(seconds: 1),
-                          child: MobilepercentFT()),
+                          child: const MobileFullScreen()),
                     );
                   },
                   child: const Text(
